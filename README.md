@@ -1,6 +1,6 @@
 # SaaS Starter
 
-[![CircleCI](https://circleci.com/gh/sdudziak/saas_starter.svg?style=svg&circle-token=3c7bb2271ea15ea0a7c46e31abace819746fd469)](https://circleci.com/gh/sdudziak/saas_starter)
+[![CircleCI](https://circleci.com/gh/sdudziak/saas_starter.svg?style=svg)](https://circleci.com/gh/sdudziak/saas_starter)
 [![codecov](https://codecov.io/gh/sdudziak/saas_starter/branch/master/graph/badge.svg?token=ueZ5elU993)](https://codecov.io/gh/sdudziak/saas_starter)
 
 Simple starter for SaaS projects. Just download, 
