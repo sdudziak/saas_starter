@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+<body>
+<th:block th:fragment="unauthorized">
+    <nav class="navbar sticky-top navbar-dark bg-dark md-light">
+        <a class="navbar-brand" href="#">
+            <img src="../../../public/images/saas_logo_s.png" th:src="@{images/saas_logo_s.png}"
+                 class="d-inline-block align-top" alt="" th:alt="#{application.name}">
+        </a>
+
+        <div class="my-2 my-lg-0" sec:authorize="hasRole('ROLE_ADMIN')">
+            <span class="btn material-icons md-48">supervised_user_circle</span>
+            <span sec:authentication="name" class="btn">Admin</span>
+            <a class="btn btn-outline-primary my-2 my-sm-0"
+               href="/logout" th:href="@{/logout}"
+               th:text="#{home.login_form.logout}"
+            >logout</a>
+        </div>
+        <div class="my-2 my-lg-0" sec:authorize="hasRole('ROLE_USER')">
+            <span class="btn material-icons md-48">face</span>
+            <span sec:authentication="name" class="btn">User</span>
+            <a class="btn btn-outline-primary my-2 my-sm-0"N
+               href="/logout" th:href="@{/logout}"
+               th:text="#{home.login_form.logout}"
+            >logout</a>
+        </div>
+    </nav>
+</th:block>
+</body>

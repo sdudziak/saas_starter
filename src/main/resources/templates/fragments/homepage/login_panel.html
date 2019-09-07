@@ -1,0 +1,127 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags" th:lang="en">
+<body>
+<th:block th:fragment="login_panel (user)" sec:authorize="hasRole('ROLE_ANONYMOUS')">
+    <div class="col-sm-3 login-panel">
+        <div class="card nav nav-tabs">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active"
+                           href="#login"
+                           id="login-tab"
+                           aria-controls="login"
+                           data-toggle="tab"
+                           role="tab"
+                           aria-selected="true"
+                           th:text="#{home.login_form.login}"
+                        >Log in</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="#signin"
+                           id="signin-tab"
+                           aria-controls="signin"
+                           data-toggle="tab"
+                           role="tab"
+                           aria-selected="false"
+                           th:text="#{home.login_form.signin}"
+                        >Sign in</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body tab-content">
+                <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                    <form class="login-form" action="/login" th:action="@{/login}" th:name="login-form" method="POST">
+                        <div>
+                            <label for="username" th:utext="#{home.login_form.username_or_email} + ':'">E-mail:</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="username"
+                                   name="username"
+                                   placeholder="john@doe.com"
+                                   th:placeholder="#{home.login_form.username_or_email.input_placeholder}" required
+                            >
+                        </div>
+                        <div>
+                            <label for="password" th:utext="#{home.login_form.password} + ':'">Password:</label>
+                            <input type="password"
+                                   class="form-control"
+                                   id="password"
+                                   name="password"
+                                   placeholder="password"
+                                   th:placeholder="#{home.login_form.password}" required
+                            >
+                        </div>
+                        <div class="custom-control custom-switch switch-remember-me">
+                            <input type="checkbox" class="custom-control-input" id="remember_me" th:name="remember_me">
+                            <label class="custom-control-label" for="remember_me"
+                                   th:text="#{home.login_form.remember_me}">Remember me</label>
+                        </div>
+                        <div class="text-left submit">
+                            <button class="btn btn-primary" type="submit" th:text="#{home.login_form.login}">Login
+                            </button>
+                        </div>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="signin" role="tabpanel" aria-labelledby="singin-tab">
+                    <!--/*@thymesVar id="user" type="io.saas.starter.modules.security.signin.dto.User"*/-->
+                    <form class="signin-form"
+                          action="/register"
+                          th:action="@{/register}"
+                          th:object="${user}"
+                          method="post"
+                    >
+                        <div>
+                            <label for="signin_name"
+                                   th:utext="#{home.login_form.username_or_email} + ':'"
+                            >E-mail:</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="signin_name"
+                                   placeholder="john@doe.com"
+                                   th:placeholder="#{home.login_form.username_or_email.input_placeholder}" required
+                                   th:field="*{email}"
+                            >
+                        </div>
+                        <div>
+                            <label for="signin_password" th:utext="#{home.login_form.password} + ':'">Password:</label>
+                            <input type="password"
+                                   class="form-control"
+                                   id="signin_password"
+                                   placeholder="password"
+                                   th:placeholder="#{home.login_form.password}" required
+                                   th:field="*{password}"
+                            >
+                        </div>
+                        <div>
+                            <label for="signin_matching_password"
+                                   th:utext="#{home.login_form.password} + ':'">
+                                Password:
+                            </label>
+                            <input type="password"
+                                   class="form-control"
+                                   id="signin_matching_password"
+                                   placeholder="repeat password"
+                                   th:placeholder="#{home.login_form.password_repeat}" required
+                                   th:field="*{matchingPassword}"
+                            >
+                        </div>
+                        <div class="text-left submit">
+                            <button class="btn btn-light"
+                                    type="submit"
+                                    th:text="#{home.login_form.signin}">
+                                Sign in
+                            </button>
+                        </div>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</body>
+
+</html>

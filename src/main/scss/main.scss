@@ -1,0 +1,70 @@
+$theme-color-primary:#2e8dd2;
+
+.md-light {
+  color: $theme-color-primary;
+}
+.btn {
+  color: $theme-color-primary;
+}
+
+.btn:hover {
+  color: white;
+}
+
+.navbar {
+  .navbar-brand {
+    transform: translateX(-50%);
+    left: 50%;
+    position: relative;
+    top: -6px;
+    height: 30px;
+
+    img {
+      width: 60px;
+      height: 60px;
+      margin-right: .5rem;
+    }
+  }
+}
+
+.login-panel {
+  transform: translateX(-50%);
+  left: 80%;
+  top: 10%;
+  position: absolute;
+}
+
+.headers-slide {
+  position: relative;
+}
+
+.homepage {
+  .homepage-carousel {
+    max-height: 700px;
+
+    .carousel-inner {
+      .carousel-item-content {
+        position: relative;
+        max-height: 700px;
+        overflow: hidden;
+      }
+
+      .carousel-img {
+        display: block;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  }
+
+  .login-panel {
+    form.login-form,
+    form.signin-form {
+      .submit,
+      .switch-remember-me {
+        margin-top: 1em;
+      }
+    }
+  }
+}

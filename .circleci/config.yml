@@ -1,0 +1,17 @@
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:11.0.3-jdk-stretch
+    steps:
+      - checkout
+      - run:
+          name: Init gradle wrapper
+          command: gradle wrapper
+      - run:
+          name: Run tests & Generate code coverage && perform static code analysis
+          command: ./gradlew test codeCoverageReport detekt
+      - codecov/upload:
+          file: build/reports/jacoco/xml/report.xml

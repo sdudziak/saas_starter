@@ -1,0 +1,28 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default-schema: saas_starter
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    generate-ddl: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: "jdbc:postgresql://localhost:5533/saas_starter"
+    username: postgres
+    platform: postgres
+  devtools:
+    remote:
+      secret: remoteSaaSstarterPack
+---
+logging:
+  level:
+    org:
+      springframework:
+        security: debug

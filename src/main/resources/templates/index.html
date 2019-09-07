@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:text="#{application.name} + ' - ' + #{index.title}"></title>
+    <link rel="stylesheet"
+          type="text/css"
+          media="all"
+          th:href="@{webjars/bootstrap/4.3.1/css/bootstrap.min.css}"
+    />
+    <link rel="stylesheet"
+          type="text/css"
+          media="all"
+          href="../public/css/main.css"
+          th:href="@{css/main.css}"
+    />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+<th:block th:insert="fragments/common/navbar::unauthorized" />
+<div class="headers-slide homepage">
+    <th:block th:insert="~{fragments/homepage/carousel::homepage_carousel}" />
+    <th:block th:insert="~{fragments/homepage/login_panel::login_panel (user=${user})}" />
+</div>
+<script th:src="@{webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script th:src="@{webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<th:block th:insert="fragments/development/debug::debug_tools" />
+</body>
+</html>
