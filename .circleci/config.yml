@@ -8,19 +8,19 @@ jobs:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
     working_directory: ~/code
     docker:
-      - image: circleci/openjdk:11.0.3-jdk-stretch
+      - image: circleci/openjdk:11.0.6-jdk-stretch
     steps:
       - checkout
       - restore_cache:
-          key: v2-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
-      - restore_cache:
-          key: v2-gradle-cache-{{ checksum "build.gradle.all" }}
+          key: v2.1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
       - run:
           name: Init gradle wrapper
           command: gradle wrapper
+      - restore_cache:
+          key: v2.1-gradle-cache-{{ checksum "build.gradle.all" }}
       - run:
           name: Run tests & Generate code coverage && perform static code analysis
-          command: ./gradlew jacocoRootReport detekt
+          command: ./gradlew detekt jacocoRootReport
       - run:
           name: Generate cache key
           command: cat $(find **/build.gradle) > build.gradle.all
@@ -28,7 +28,7 @@ jobs:
           name: Save gradle wrapper cache
           paths:
             - ~/.gradle/caches/
-          key: v2-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+          key: v2.1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
       - save_cache:
           name: Save gradle cache to cache
           paths:
@@ -42,7 +42,7 @@ jobs:
       - store_artifacts:
           path: build/libs
       - codecov/upload:
-          file: build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml
+          file: build/reports/jacoco/coverage.xml
 workflows:
   version: 2
   workflow:

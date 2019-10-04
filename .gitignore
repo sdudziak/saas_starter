@@ -9,5 +9,4 @@
 
 # Ignore build artifacts, which are not a part of the codebase
 core/src/main/resources/public/css/*
-
 /gradle/wrapper/gradle-wrapper.jar

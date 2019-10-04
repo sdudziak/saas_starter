@@ -53,7 +53,6 @@ allprojects {
 }
 
 def publishedProjects = subprojects.findAll {
-    it.name != 'functional-test' &&
     it.name != 'migrations'
 }
 
@@ -74,7 +73,10 @@ task jacocoRootReport(type: JacocoReport, group: 'verification') {
     classDirectories.from files(publishedProjects.sourceSets.main.output)
     additionalClassDirs.from files(publishedProjects.sourceSets.main.output)
 
-    executionData jacocoMerge.destinationFile
+//    executionData jacocoMerge.destinationFile
+    executionData.from project.fileTree(".") {
+        include("**/build/jacoco/test.exec")
+    }
 
     onlyIf { true }
     doFirst { executionData.from files(executionData.findAll { it.exists() }) }
@@ -107,3 +109,7 @@ jacocoTestCoverageVerification {
 }
 
 jacocoRootReport.dependsOn jacocoTestCoverageVerification
+
+dependencies {
+    compile project(':core')
+}
