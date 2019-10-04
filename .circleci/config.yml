@@ -12,6 +12,6 @@ jobs:
           command: gradle wrapper
       - run:
           name: Run tests & Generate code coverage && perform static code analysis
-          command: ./gradlew test codeCoverageReport detekt
+          command: ./gradlew jacocoRootReport detekt
       - codecov/upload:
           file: build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml
