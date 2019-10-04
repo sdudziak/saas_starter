@@ -14,4 +14,4 @@ jobs:
           name: Run tests & Generate code coverage && perform static code analysis
           command: ./gradlew test codeCoverageReport detekt
       - codecov/upload:
-          file: build/reports/jacoco/xml/report.xml
+          file: build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml

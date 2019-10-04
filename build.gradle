@@ -1,0 +1,58 @@
+apply plugin: 'java'
+apply plugin: 'jacoco'
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+
+    repositories {
+        maven { url "https://repo.spring.io/plugins-release" }
+        gradlePluginPortal()
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        compile "org.jacoco:org.jacoco.ant:$jacocoVersion"
+    }
+
+    jacoco {
+        toolVersion = jacocoVersion
+    }
+
+    jacocoTestReport {
+        group = 'Coverage reports'
+        description = 'Generates a test coverage report for a project'
+
+        reports {
+            xml.enabled = true
+            html.enabled = true
+        }
+    }
+}
+
+def publishedProjects = subprojects.findAll { it.path != ':simulator' }
+
+task jacocoMerge(type: JacocoMerge) {
+    publishedProjects.each { subproject ->
+        executionData subproject.tasks.withType(Test)
+    }
+    doFirst {
+        executionData = files(executionData.findAll { it.exists() })
+    }
+}
+
+task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
+    description = 'Generates an aggregate report from all subprojects'
+    dependsOn publishedProjects.test, jacocoMerge
+
+    additionalSourceDirs.from = files(publishedProjects.sourceSets.main.allSource.srcDirs)
+    sourceDirectories.from = files(publishedProjects.sourceSets.main.allSource.srcDirs)
+    classDirectories.from = files(publishedProjects.sourceSets.main.output)
+    executionData jacocoMerge.destinationFile
+
+    reports {
+        html.enabled = true // human readable
+        xml.enabled = true // required by coveralls
+    }
+}
