@@ -33,7 +33,7 @@ allprojects {
     }
 }
 
-def publishedProjects = subprojects.findAll { it.path != ':simulator' }
+def publishedProjects = subprojects.findAll
 
 task jacocoMerge(type: JacocoMerge) {
     publishedProjects.each { executionData it.tasks.withType(Test) }
