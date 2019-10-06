@@ -33,7 +33,7 @@ allprojects {
     }
 }
 
-def publishedProjects = subprojects.findAll
+def publishedProjects = subprojects.findAll { it.path != ':simulator' }
 
 task jacocoMerge(type: JacocoMerge) {
     publishedProjects.each { executionData it.tasks.withType(Test) }
@@ -42,7 +42,7 @@ task jacocoMerge(type: JacocoMerge) {
 
 task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
     description = 'Generates an aggregate report from all subprojects'
-    dependsOn publishedProjects.test
+    dependsOn publishedProjects.test, jacocoMerge
 
     additionalSourceDirs.from = files(publishedProjects.sourceSets.main.allSource.srcDirs)
     sourceDirectories.from = files(publishedProjects.sourceSets.main.allSource.srcDirs)
@@ -61,7 +61,9 @@ task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
     reports {
         html.enabled = true // human readable
         xml.enabled = true // required by coveralls
+        xml.destination = file("${buildDir}/reports/jacoco")
         html.destination = file("${buildDir}/reports/jacoco/html")
+        sourceSets sourceSets.main
     }
 
     afterEvaluate {
