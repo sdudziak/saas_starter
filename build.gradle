@@ -16,13 +16,15 @@ allprojects {
         compile "org.jacoco:org.jacoco.ant:$jacocoVersion"
     }
 
-    jacoco {
-        toolVersion = jacocoVersion
-    }
+    jacoco { toolVersion = jacocoVersion }
 
     jacocoTestReport {
         group = 'Coverage reports'
         description = 'Generates a test coverage report for a project'
+
+        additionalSourceDirs.from  files(sourceSets.main.allSource.srcDirs)
+        sourceDirectories.from files(sourceSets.main.allSource.srcDirs)
+        classDirectories.from files(sourceSets.main.output)
 
         reports {
             xml.enabled = true
@@ -34,25 +36,64 @@ allprojects {
 def publishedProjects = subprojects.findAll { it.path != ':simulator' }
 
 task jacocoMerge(type: JacocoMerge) {
-    publishedProjects.each { subproject ->
-        executionData subproject.tasks.withType(Test)
-    }
-    doFirst {
-        executionData = files(executionData.findAll { it.exists() })
-    }
+    publishedProjects.each { executionData it.tasks.withType(Test) }
+    doFirst { executionData = files(executionData.findAll { it.exists() }) }
 }
 
 task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
     description = 'Generates an aggregate report from all subprojects'
-    dependsOn publishedProjects.test, jacocoMerge
+    dependsOn publishedProjects.test
 
     additionalSourceDirs.from = files(publishedProjects.sourceSets.main.allSource.srcDirs)
     sourceDirectories.from = files(publishedProjects.sourceSets.main.allSource.srcDirs)
     classDirectories.from = files(publishedProjects.sourceSets.main.output)
+
     executionData jacocoMerge.destinationFile
+
+    onlyIf = {
+        true
+    }
+
+    doFirst {
+        executionData.from files(executionData.findAll { it.exists() })
+    }
 
     reports {
         html.enabled = true // human readable
         xml.enabled = true // required by coveralls
+        html.destination = file("${buildDir}/reports/jacoco/html")
+    }
+
+    afterEvaluate {
+        classDirectories.from files(classDirectories.files.collect {
+            fileTree(
+                dir: it,
+                excludes: [
+                    "*io/saas/starter/Application*",
+                    "*io/saas/starter/configuration/*",
+                    "*io/saas/starter/*Test*/*"
+                ]
+            )
+        })
     }
 }
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'CLASS'
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 1.0
+            }
+            excludes = [
+                'io.saas.starter.configuration.*',
+                '*Test*',
+                'io.saas.starter.Application'
+            ]
+        }
+    }
+}
+
+jacocoRootReport.dependsOn jacocoTestCoverageVerification

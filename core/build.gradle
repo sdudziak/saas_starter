@@ -159,33 +159,3 @@ configure(sass) {
     group = BasePlugin.BUILD_GROUP
     description = "Compile sass and copy output to valid target directory"
 }
-
-task codeCoverageReport(type: JacocoReport) {
-    group = "Reporting"
-    description = "Generate Jacoco coverage reports for Debug build"
-
-    // what to exclude from coverage report
-    // UI, "noise", generated classes, platform classes, etc.
-    def excludes = [
-            '**/starter/configuration/**.*',
-            '**/*Test*.*',
-            '**/Application*'
-    ]
-    // generated classes
-    classDirectories.from = fileTree(
-            dir: "$buildDir/classes",
-            excludes: excludes
-    )
-
-    executionData.from = files("$buildDir/jacoco/test.exec")
-    def mainSrc = "$projectDir/src/main/kotlin"
-    sourceDirectories.from files([mainSrc])
-
-    reports {
-        xml.enabled = true
-        xml.destination file("$buildDir/reports/jacoco/xml/report.xml")
-        html.enabled = true
-        html.destination file("$buildDir/reports/jacoco/html")
-        csv.enabled = false
-    }
-}
