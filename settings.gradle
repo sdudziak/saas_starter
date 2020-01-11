@@ -17,4 +17,4 @@ pluginManagement {
 
 rootProject.name = 'saas_starter'
 
-include 'core'
+include 'core', 'migrations'

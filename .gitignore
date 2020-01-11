@@ -1,7 +1,12 @@
 # Ignore Gradle project-specific cache directory
 .gradle
+.gradletasknamecache
 
 # Ignore Gradle build output directory
+
 /build
 /**/build
+
+# Ignore build artifacts, which are not a part of the codebase
 core/src/main/resources/public/css/*
+
