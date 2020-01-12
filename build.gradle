@@ -3,7 +3,7 @@ allprojects {
     apply plugin: 'jacoco'
     apply plugin: 'idea'
 
-    group = "io.saas"  
+    group = "io.saas"
     repositories {
         maven { url "https://repo.spring.io/plugins-release" }
         gradlePluginPortal()
