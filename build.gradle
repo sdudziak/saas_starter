@@ -52,7 +52,10 @@ allprojects {
     }
 }
 
-def publishedProjects = subprojects.findAll { it.path != ':functional-test' }
+def publishedProjects = subprojects.findAll {
+    it.name != 'functional-test' &&
+    it.name != 'migrations'
+}
 
 evaluationDependsOnChildren()
 
