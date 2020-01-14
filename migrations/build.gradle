@@ -1,0 +1,14 @@
+buildscript {
+    dependencies {
+        classpath "org.postgresql:postgresql:42.2.+"
+    }
+}
+
+plugins {
+    id "org.flywaydb.flyway" version "6.1.4"
+}
+
+flyway {
+    url = 'jdbc:postgresql://localhost:5533/saas_starter'
+    user = 'postgres'
+}

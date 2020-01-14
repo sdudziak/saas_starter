@@ -20,7 +20,6 @@ spring:
   devtools:
     remote:
       secret: remoteSaaSstarterPack
----
 logging:
   level:
     org:
