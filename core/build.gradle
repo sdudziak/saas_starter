@@ -62,7 +62,7 @@ dependencies {
                    "org.webjars:popper.js:1.15.0",
                    "org.webjars:bootstrap:4.4.1"
     // DEV only
-    implementation "org.springframework.boot:spring-boot-devtools"
+    implementation "org.springframework.boot:spring-boot-devtools:2.2.4.RELEASE"
 
     runtimeOnly 'org.postgresql:postgresql:42.2.+'
 
@@ -146,13 +146,15 @@ configure(sass) {
 }
 
 testSets {
-    integrationTest
+    integrationTest { dirName = 'integration-test' }
 }
 project.integrationTest.outputs.upToDateWhen { false }
 
-tasks.withType(Test) {
-    useJUnitPlatform()
-}
-
 check.dependsOn integrationTest
 integrationTest.mustRunAfter test
+
+test { useJUnitPlatform() }
+integrationTest { useJUnitPlatform() }
+
+
+
