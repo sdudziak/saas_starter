@@ -33,15 +33,7 @@ allprojects {
         }
 
         afterEvaluate {
-            def exclusionRule = { File file ->
-                fileTree(
-                    dir: file,
-                    excludes: [
-                        "*io/saas/starter/Application*",
-                        "*io/saas/starter/configuration/*",
-                    ]
-                )
-            }
+            def exclusionRule = { File file -> fileTree(dir: file, excludes: []) }
 
             sourceDirectories.from files(sourceDirectories.files.collect { exclusionRule(it) })
             classDirectories.from files(classDirectories.files.collect { exclusionRule(it) })
@@ -53,14 +45,13 @@ allprojects {
 }
 
 def publishedProjects = subprojects.findAll {
-    it.name != 'functional-test' &&
     it.name != 'migrations'
 }
 
 evaluationDependsOnChildren()
 
 task jacocoMerge(type: JacocoMerge) {
-    dependsOn publishedProjects.test, publishedProjects.jacocoTestReport
+    dependsOn publishedProjects.test, publishedProjects.integrationTest, publishedProjects.jacocoTestReport
     doFirst { executionData files(executionData.findAll { it.exists() }) }
     publishedProjects.each { executionData it.tasks.withType(Test) }
 }
@@ -74,7 +65,10 @@ task jacocoRootReport(type: JacocoReport, group: 'verification') {
     classDirectories.from files(publishedProjects.sourceSets.main.output)
     additionalClassDirs.from files(publishedProjects.sourceSets.main.output)
 
-    executionData jacocoMerge.destinationFile
+//    executionData jacocoMerge.destinationFile
+    executionData.from project.fileTree(".") {
+        include("**/build/jacoco/test.exec")
+    }
 
     onlyIf { true }
     doFirst { executionData.from files(executionData.findAll { it.exists() }) }
@@ -107,3 +101,7 @@ jacocoTestCoverageVerification {
 }
 
 jacocoRootReport.dependsOn jacocoTestCoverageVerification
+
+dependencies {
+    compile project(':core')
+}
