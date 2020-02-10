@@ -45,13 +45,14 @@ allprojects {
 }
 
 def publishedProjects = subprojects.findAll {
-    it.name != 'migrations'
+    it.name != 'migrations' ||
+    it.name != 'frontend'
 }
 
 evaluationDependsOnChildren()
 
 task jacocoMerge(type: JacocoMerge) {
-    dependsOn publishedProjects.test, publishedProjects.integrationTest, publishedProjects.jacocoTestReport
+    dependsOn publishedProjects.test,  publishedProjects.jacocoTestReport
     doFirst { executionData files(executionData.findAll { it.exists() }) }
     publishedProjects.each { executionData it.tasks.withType(Test) }
 }
@@ -103,5 +104,6 @@ jacocoTestCoverageVerification {
 jacocoRootReport.dependsOn jacocoTestCoverageVerification
 
 dependencies {
-    compile project(':core')
+    implementation project(':core'),
+                   project(':frontend')
 }
