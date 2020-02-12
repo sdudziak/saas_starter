@@ -10,3 +10,11 @@
 # Ignore build artifacts, which are not a part of the codebase
 core/src/main/resources/public/css/*
 /gradle/wrapper/gradle-wrapper.jar
+
+# frontend
+/frontend/dist
+/frontend/tmp
+/frontend/out-tsc
+/frontend/node_modules
+/frontend/.gradle
+/frontend/coverage

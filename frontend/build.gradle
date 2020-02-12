@@ -1,17 +1,36 @@
 
 plugins {
     id 'java'
-    id "com.moowork.node" version "1.2.0"
+    id "com.github.node-gradle.node" version "2.1.1"
 }
 
 node {
-    version = '13.7.0'
-    npmVersion = '6.13.6'
+    version = '13.8.0'
+    npmVersion = '6.13.7'
     download = true
 }
-
-jar.dependsOn 'npm_run_build'
 
 jar {
     from 'dist/frontend' into 'static'
 }
+
+task buildAngularApp(type: NpxTask) {
+    description "Build Angular X application"
+    dependsOn npmInstall
+    command = 'ng'
+    args = ['build', '--prod']
+    inputs.files('package.json', 'package-lock.json', 'angular.json', 'tsconfig.json', 'tsconfig.app.json')
+    inputs.dir('src')
+    inputs.dir(fileTree("node_modules").exclude(".cache"))
+    outputs.dir('dist')
+}
+
+task deleteNodeDependencies(type: Delete) {
+  delete 'node_modules', 'dist', 'coverage'
+}
+
+clean.dependsOn deleteNodeDependencies
+jar.dependsOn 'npm_run_build'
+check.dependsOn 'npm_run_lint'
+check.dependsOn 'npm_run_testWithCoverage'
+check.dependsOn 'npm_run_e2e'
