@@ -45,7 +45,7 @@ allprojects {
 }
 
 def publishedProjects = subprojects.findAll {
-    it.name != 'migrations' ||
+    it.name != 'migrations' &&
     it.name != 'frontend'
 }
 
