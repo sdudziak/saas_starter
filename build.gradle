@@ -103,7 +103,3 @@ jacocoTestCoverageVerification {
 
 jacocoRootReport.dependsOn jacocoTestCoverageVerification
 
-dependencies {
-    implementation project(':core'),
-                   project(':frontend')
-}
