@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+    id "com.github.node-gradle.node" version "2.1.1"
+}
+
+node {
+    version = '13.8.0'
+    npmVersion = '6.13.7'
+    download = true
+}
+
+task buildAngularApp(type: NpxTask) {
+    description "Build Angular 8 application"
+    dependsOn npmInstall
+    command = 'ng'
+    args = ['build', '--prod', '--outputPath=build/', '--progress=true', '--extractLicenses=true']
+    inputs.files('package.json', 'package-lock.json', 'angular.json', 'tsconfig.json', 'tsconfig.app.json')
+    inputs.dir('src')
+    inputs.dir(fileTree("node_modules").exclude(".cache"))
+    outputs.dir('dist')
+}
+
+configurations {
+  npmResources
+}
+
+clean {
+  delete 'node_modules', 'dist', 'coverage'
+}
+
+build.dependsOn buildAngularApp
+check.dependsOn 'npm_run_lint'
+check.dependsOn 'npm_run_testWithCoverage'
+check.dependsOn 'npm_run_e2e'
