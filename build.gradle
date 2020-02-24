@@ -66,7 +66,6 @@ task jacocoRootReport(type: JacocoReport, group: 'verification') {
     classDirectories.from files(publishedProjects.sourceSets.main.output)
     additionalClassDirs.from files(publishedProjects.sourceSets.main.output)
 
-//    executionData jacocoMerge.destinationFile
     executionData.from project.fileTree(".") {
         include("**/build/jacoco/test.exec")
     }
@@ -102,4 +101,3 @@ jacocoTestCoverageVerification {
 }
 
 jacocoRootReport.dependsOn jacocoTestCoverageVerification
-

@@ -9,53 +9,26 @@ node {
     download = true
 }
 
-jar {
-    from 'dist/frontend' into 'static'
-}
-
 task buildAngularApp(type: NpxTask) {
     description "Build Angular 8 application"
     dependsOn npmInstall
     command = 'ng'
-    args = ['build', '--prod']
+    args = ['build', '--prod', '--outputPath=build/', '--progress=true', '--extractLicenses=true']
     inputs.files('package.json', 'package-lock.json', 'angular.json', 'tsconfig.json', 'tsconfig.app.json')
     inputs.dir('src')
     inputs.dir(fileTree("node_modules").exclude(".cache"))
     outputs.dir('dist')
 }
 
-// pack output of the build into JAR file
-task packageNpmApp(type: Zip) {
-  dependsOn buildAngularApp
-  baseName 'frontend'
-  extension 'jar'
-  destinationDir file("${projectDir}/build")
-  from('dist/frontend') {
-    // optional path under which output will be visible in Java classpath, e.g. static resources path
-    into 'static'
-  }
-}
-
 configurations {
   npmResources
 }
 
-configurations.default.extendsFrom(configurations.npmResources)
-
 clean {
   delete 'node_modules', 'dist', 'coverage'
-  delete packageNpmApp.archiveFile
-
 }
 
-artifacts {
-  npmResources(packageNpmApp.archiveFile) {
-    builtBy packageNpmApp
-    type 'jar'
-  }
-}
-
-assemble.dependsOn packageNpmApp
+build.dependsOn buildAngularApp
 check.dependsOn 'npm_run_lint'
 check.dependsOn 'npm_run_testWithCoverage'
 check.dependsOn 'npm_run_e2e'
