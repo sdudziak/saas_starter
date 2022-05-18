@@ -1,0 +1,97 @@
+18:43:00.153 [Test worker] ERROR com.intuit.karate - classpath:karate/example.feature:4
+Given def a = 1
+>> classpath:karate/example.feature:3
+>> karate-config.js failed
+>> js failed:
+>>>>
+01: ()
+<<<<
+org.graalvm.polyglot.PolyglotException: SyntaxError: Unnamed:1:2 Expected => but found eof
+()
+  ^
+
+- org.graalvm.polyglot.Context.eval(Context.java:401)
+- com.intuit.karate.graal.JsEngine.evalForValue(JsEngine.java:141)
+- com.intuit.karate.graal.JsEngine.eval(JsEngine.java:137)
+- com.intuit.karate.core.ScenarioEngine.evalJs(ScenarioEngine.java:1344)
+- com.intuit.karate.core.ScenarioRuntime.evalConfigJs(ScenarioRuntime.java:313)
+- com.intuit.karate.core.ScenarioRuntime.beforeRun(ScenarioRuntime.java:398)
+- com.intuit.karate.core.ScenarioRuntime.run(ScenarioRuntime.java:430)
+
+js failed:
+>>>>
+<<<<
+com.intuit.karate.KarateException: js failed:
+>>>>
+01: ()
+<<<<
+org.graalvm.polyglot.PolyglotException: SyntaxError: Unnamed:1:2 Expected => but found eof
+()
+  ^
+
+- org.graalvm.polyglot.Context.eval(Context.java:401)
+- com.intuit.karate.graal.JsEngine.evalForValue(JsEngine.java:141)
+- com.intuit.karate.graal.JsEngine.eval(JsEngine.java:137)
+- com.intuit.karate.core.ScenarioEngine.evalJs(ScenarioEngine.java:1344)
+- com.intuit.karate.core.ScenarioRuntime.evalConfigJs(ScenarioRuntime.java:313)
+- com.intuit.karate.core.ScenarioRuntime.beforeRun(ScenarioRuntime.java:398)
+- com.intuit.karate.core.ScenarioRuntime.run(ScenarioRuntime.java:430)
+
+- com.intuit.karate.graal.JsEngine.fromJsEvalException(JsEngine.java:233)
+- com.intuit.karate.core.ScenarioEngine.evalJs(ScenarioEngine.java:1346)
+- com.intuit.karate.core.ScenarioRuntime.evalConfigJs(ScenarioRuntime.java:313)
+- com.intuit.karate.core.ScenarioRuntime.beforeRun(ScenarioRuntime.java:398)
+- com.intuit.karate.core.ScenarioRuntime.run(ScenarioRuntime.java:430)
+- com.intuit.karate.core.FeatureRuntime.processScenario(FeatureRuntime.java:182)
+- java.base/java.util.Iterator.forEachRemaining(Iterator.java:133)
+
+classpath:karate/example.feature:4
+18:43:00.164 [Test worker] ERROR com.intuit.karate - classpath:karate/example.feature:5
+Then match a == 1
+>> classpath:karate/example.feature:3
+>> karate-config.js failed
+>> js failed:
+>>>>
+01: ()
+<<<<
+org.graalvm.polyglot.PolyglotException: SyntaxError: Unnamed:1:2 Expected => but found eof
+()
+  ^
+
+- org.graalvm.polyglot.Context.eval(Context.java:401)
+- com.intuit.karate.graal.JsEngine.evalForValue(JsEngine.java:141)
+- com.intuit.karate.graal.JsEngine.eval(JsEngine.java:137)
+- com.intuit.karate.core.ScenarioEngine.evalJs(ScenarioEngine.java:1344)
+- com.intuit.karate.core.ScenarioRuntime.evalConfigJs(ScenarioRuntime.java:313)
+- com.intuit.karate.core.ScenarioRuntime.beforeRun(ScenarioRuntime.java:398)
+- com.intuit.karate.core.ScenarioRuntime.run(ScenarioRuntime.java:430)
+
+js failed:
+>>>>
+<<<<
+com.intuit.karate.KarateException: js failed:
+>>>>
+01: ()
+<<<<
+org.graalvm.polyglot.PolyglotException: SyntaxError: Unnamed:1:2 Expected => but found eof
+()
+  ^
+
+- org.graalvm.polyglot.Context.eval(Context.java:401)
+- com.intuit.karate.graal.JsEngine.evalForValue(JsEngine.java:141)
+- com.intuit.karate.graal.JsEngine.eval(JsEngine.java:137)
+- com.intuit.karate.core.ScenarioEngine.evalJs(ScenarioEngine.java:1344)
+- com.intuit.karate.core.ScenarioRuntime.evalConfigJs(ScenarioRuntime.java:313)
+- com.intuit.karate.core.ScenarioRuntime.beforeRun(ScenarioRuntime.java:398)
+- com.intuit.karate.core.ScenarioRuntime.run(ScenarioRuntime.java:430)
+
+- com.intuit.karate.graal.JsEngine.fromJsEvalException(JsEngine.java:233)
+- com.intuit.karate.core.ScenarioEngine.evalJs(ScenarioEngine.java:1346)
+- com.intuit.karate.core.ScenarioRuntime.evalConfigJs(ScenarioRuntime.java:313)
+- com.intuit.karate.core.ScenarioRuntime.beforeRun(ScenarioRuntime.java:398)
+- com.intuit.karate.core.ScenarioRuntime.run(ScenarioRuntime.java:430)
+- com.intuit.karate.core.FeatureRuntime.processScenario(FeatureRuntime.java:182)
+- java.base/java.util.Iterator.forEachRemaining(Iterator.java:133)
+
+classpath:karate/example.feature:4
+classpath:karate/example.feature:5
