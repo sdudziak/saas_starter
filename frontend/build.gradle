@@ -1,16 +1,16 @@
 plugins {
     id 'java'
-    id "com.github.node-gradle.node" version "2.1.1"
+    id "com.github.node-gradle.node" version "3.3.0"
 }
 
 node {
-    version = '13.8.0'
+    version = '16.10.0'
     npmVersion = '6.13.7'
     download = true
 }
 
 task buildAngularApp(type: NpxTask) {
-    description "Build Angular 8 application"
+    description "Build Angular 13.2.2 application"
     dependsOn npmInstall
     command = 'ng'
     args = ['build', '--prod', '--outputPath=build/', '--progress=true', '--extractLicenses=true']

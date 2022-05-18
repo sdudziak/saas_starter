@@ -14,6 +14,8 @@ insert into "privilege" (id, name) VALUES (6, 'WRITE_ROLES_PRIVILEGE');
 
 -- Create roles
 insert into "role" (id, name) VALUES (1, 'ROLE_ADMIN');
+insert into "role" (id, name) VALUES (2, 'ROLE_USER');
+insert into "role" (id, name) VALUES (3, 'ROLE_UNVERIFIED_USER');
 
 -- link privileges to the role admin
 insert into "roles_privileges"(role_id, privilege_id) VALUES (1,1);

@@ -8,7 +8,6 @@ allprojects {
         maven { url "https://repo.spring.io/plugins-release" }
         gradlePluginPortal()
         mavenCentral()
-        jcenter()
     }
 
     dependencies {
@@ -33,7 +32,7 @@ allprojects {
         }
 
         afterEvaluate {
-            def exclusionRule = { File file -> fileTree(dir: file, excludes: []) }
+            def exclusionRule = { file -> fileTree(dir: file, excludes: []) }
 
             sourceDirectories.from files(sourceDirectories.files.collect { exclusionRule(it) })
             classDirectories.from files(classDirectories.files.collect { exclusionRule(it) })
