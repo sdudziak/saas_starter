@@ -1,30 +1,28 @@
 buildscript {
     repositories {
         mavenCentral()
-        jcenter()
     }
 
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61"
-        classpath "gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.22.2"
-        classpath "gradle.plugin.org.kravemir.gradle.sass:GradleSassPlugin:1.2.2"
-        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.6.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
     }
 }
 
 plugins {
     id 'groovy'
     id 'java'
-    id "org.jetbrains.kotlin.jvm" version "1.3.61"
-    id "org.jetbrains.kotlin.plugin.spring" version "1.3.61"
+    id 'application'
+    id "org.jetbrains.kotlin.jvm" version "1.6.10"
+    id "org.jetbrains.kotlin.plugin.spring" version "1.6.10"
     id "org.asciidoctor.convert" version "2.4.0"
     id "org.springframework.boot" version "2.2.3.RELEASE"
     id "io.spring.dependency-management" version "1.0.8.RELEASE"
-    id "com.palantir.docker" version "0.24.0"
+    id "com.palantir.docker" version "0.33.0"
     id "io.gitlab.arturbosch.detekt" version "1.4.0"
     id "org.kravemir.gradle.sass" version "1.2.4"
     id "name.remal.check-updates" version "1.0.162"
-    id 'org.unbroken-dome.test-sets' version '2.2.1'
+    id 'org.unbroken-dome.test-sets' version '4.0.0'
+    id "org.asciidoctor.base" version "3.3.2"
 }
 
 version = "0.0.1-SNAPSHOT"
@@ -34,7 +32,6 @@ project.ext.set("snippetsDir", "build/snippets")
 
 repositories {
     mavenCentral()
-    jcenter()
     maven { url "https://repo1.maven.org/maven2/" }
     maven { url = uri "https://repo.spring.io/milestone" }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -42,44 +39,74 @@ repositories {
 
 dependencies {
     // dependencies
-    implementation "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}",
-                   "org.springframework.boot:spring-boot-starter-cache:${springBootVersion}",
-                   "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}",
-                   "org.springframework.boot:spring-boot-starter-mail:${springBootVersion}",
-                   "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}",
-                   "org.springframework.boot:spring-boot-starter-web:${springBootVersion}",
-                   "com.fasterxml.jackson.module:jackson-module-kotlin:2.10.+",
-                   "com.fasterxml.jackson.core:jackson-databind:2.10.+",
-                   "org.jetbrains.kotlin:kotlin-stdlib-jdk8",
-                   "org.jetbrains.kotlin:kotlin-reflect",
-                   "org.springframework.session:spring-session-core:2.2.0.RELEASE",
-                   "org.passay:passay:1.5.0",
+    implementation "org.springframework.boot:spring-boot-starter-actuator:2.6.7",
+                   "org.springframework.boot:spring-boot-starter-cache:2.6.7",
+                   "org.springframework.boot:spring-boot-starter-data-jpa:2.6.7",
+                   "org.springframework.boot:spring-boot-starter-mail:2.6.7",
+                   "org.springframework.boot:spring-boot-starter-validation:2.6.7",
+                   "org.springframework.boot:spring-boot-starter-websocket:2.6.7",
+                   "org.springframework.session:spring-session-core:2.6.3",
+                   "com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3",
+                   "com.fasterxml.jackson.core:jackson-databind:2.13.3",
+                   "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.10",
+                   "org.jetbrains.kotlin:kotlin-reflect:1.6.10",
+                   "org.passay:passay:1.6.1",
                    "commons-beanutils:commons-beanutils:1.9.4",
                    "org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.0.4.RELEASE",
-                   "org.webjars:jquery:3.4.1",
-                   "org.webjars:popper.js:1.15.0",
-                   "org.webjars:bootstrap:4.4.1",
-                   "org.springframework.boot:spring-boot-devtools:2.2.4.RELEASE",
+                   "org.webjars:bootstrap:5.1.3",
+                   "org.springframework.boot:spring-boot-devtools:${springBootVersion}",
                    project(':frontend')
 
-    runtimeOnly 'org.postgresql:postgresql:42.2.+'
+    constraints {
+        implementation ("commons-collections:commons-collections:3.2.2") {
+            because "Vulnerability: Uncontrolled Recursion vulnerability pending CVSS allocation"
+        }
+        implementation ("org.hibernate.validator:hibernate-validator:6.2.3.Final") {
+            because "Vulnerability: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability pending CVSS allocation "
+        }
+        implementation ("org.hibernate:hibernate-core:5.6.4.Final") {
+            because "Vulnerability: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability pending CVSS allocation "
+        }
+        implementation ("org.dom4j:dom4j:2.1.3") {
+            because "Vulnerability: Improper Restriction of XML External Entity Reference vulnerability pending CVSS allocation"
+        }
+        implementation ("ch.qos.logback:logback-classic:1.2.5") {
+            because "Vulnerability: Deserialization of Untrusted Data vulnerability pending CVSS allocation"
+        }
+        implementation ("ch.qos.logback:logback-core:1.2.5") {
+            because "Vulnerability: Deserialization of Untrusted Data vulnerability pending CVSS allocation"
+        }
+        implementation ("org.springframework:spring-beans:5.3.18") {
+            because "Vulnerability: improper Control of Generation of Code ('Code Injection') vulnerability pending CVSS allocation"
+        }
+        implementation ("org.springframework:spring-context:5.3.18") {
+            because "Improper Handling of Case Sensitivity vulnerability pending CVSS allocation"
+        }
+        implementation ("org.springframework:spring-core:5.3.18") {
+            because "Improper Output Neutralization for Logs vulnerability pending CVSS allocation"
+        }
+        implementation ("org.springframework:spring-expression::5.3.18") {
+            because "Allocation of Resources Without Limits or Throttling vulnerability pending CVSS allocation "
+        }
+    }
 
-    testImplementation "org.codehaus.groovy:groovy-all:2.5.9",
-                       "org.spockframework:spock-core:1.3-groovy-2.5",
-                       "org.hamcrest:hamcrest-core:2.+",
-                       "org.junit.jupiter:junit-jupiter-params:5.5+",
-                       "org.junit.jupiter:junit-jupiter-api:5.5+",
-                       "io.mockk:mockk:1.9.3",
-                       "com.ninja-squad:springmockk:2.0.0"
-    testImplementation("org.springframework.security:spring-security-test:latest.release") {
+    runtimeOnly 'org.postgresql:postgresql:42.3.4'
+
+    testImplementation 'org.codehaus.groovy:groovy:3.0.10',
+                       'org.spockframework:spock-core:2.1-groovy-3.0',
+                       'org.hamcrest:hamcrest-core:2.2'
+    testRuntimeOnly 'net.bytebuddy:byte-buddy:1.12.10', // allows mocking of classes (in addition to interfaces)
+                    'org.objenesis:objenesis:3.2'      // allows mocking of classes without default constructor (together with ByteBuddy or CGLIB)
+
+    testImplementation("org.springframework.security:spring-security-test:5.6.3") {
         exclude module: "mockito-core"
     }
     testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}") {
         exclude(module: "junit")
         exclude(module: "mockito-core")
     }
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5+"
-    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:1.3+"
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    detektPlugins 'io.gitlab.arturbosch.detekt:detekt-formatting:1.20.0'
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {

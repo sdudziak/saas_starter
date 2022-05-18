@@ -3,7 +3,7 @@
 .gradletasknamecache
 
 # Ignore Gradle build output directory
-
+.idea
 /build
 /**/build
 
