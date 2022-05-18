@@ -8,7 +8,7 @@
 /**/build
 
 # Ignore build artifacts, which are not a part of the codebase
-core/src/main/resources/public/css/*
+app/src/main/resources/public/css/*
 /gradle/wrapper/gradle-wrapper.jar
 
 # frontend
