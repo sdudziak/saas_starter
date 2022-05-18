@@ -1,22 +1,8 @@
 version: '3'
 services:
-  redis:
-    image: "redis:5.0.5"
-    command: ["redis-server", "--appendonly", "yes"]
-    hostname: redis
-    container_name: redis
-    networks:
-      - saas-starter-net
-    volumes:
-      - redis-data:/data
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-    ports:
-      - 6379:6379
-
   database:
     image: "postgres:11.4-alpine"
-    hostname: database
+    hostname: saas_database
     container_name: postgres
     networks:
       - saas-starter-net
@@ -29,5 +15,4 @@ networks:
   saas-starter-net:
 
 volumes:
-  redis-data:
   db-data:
