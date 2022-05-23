@@ -25,3 +25,6 @@ logging:
     org:
       springframework:
         security: debug
+
+# custom settings, to be handled valid way
+client-registration-id: okta

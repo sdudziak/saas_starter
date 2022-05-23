@@ -10,7 +10,6 @@ dependencies {
                        'org.junit.jupiter:junit-jupiter-engine:5.8.2',
                        'commons-io:commons-io:2.11.0',
                        'net.masterthought:cucumber-reporting:5.7.0'
-
 }
 
 test {
@@ -19,3 +18,5 @@ test {
     systemProperty "karate.env", System.properties.getProperty("karate.env")
     outputs.upToDateWhen { false }
 }
+
+build.dependsOn ":app:test"

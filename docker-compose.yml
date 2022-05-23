@@ -1,18 +1,18 @@
-version: '3'
+version: '3.9'
 services:
   database:
-    image: "postgres:11.4-alpine"
-    hostname: saas_database
+    image: "postgres:14.3-alpine"
+    hostname: db
     container_name: postgres
     networks:
-      - saas-starter-net
+      - app-network
     ports:
-      - 5533:5432
+      - 55432:5432
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - ./docker/volumes/pgsql/data:/var/lib/postgresql/data
 
 networks:
-  saas-starter-net:
+  app-network:
 
 volumes:
   db-data:
