@@ -5,6 +5,7 @@
 <!-- [![codecov](https://codecov.io/gh/sdudziak/saas_starter/branch/master/graph/badge.svg?token=ueZ5elU993)](https://codecov.io/gh/sdudziak/saas_starter) -->
 
 ---
+
 The purpose of this project is to save your time while getting started with a new Spring Boot + any frontend modern 
 framework (It is Angular for now, but you can easily switch to React, Vue, it's up to you). The further plan is to
 create a basic setup of the application, that allows you to rapid test your SaaS idea (with payment gateways integration,
@@ -13,6 +14,7 @@ RBAC & user management).
 It's all open source solution so you can use it as you want. However I'm developing this project in the very limited 
 free time - so if you find that my work is useful for you and saved you some time (especially for commercial project) 
 please consider donation to the Author. That will also help me to develop this project more actively.
+
 ---
 
 Contains:
