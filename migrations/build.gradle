@@ -5,10 +5,11 @@ buildscript {
 }
 
 plugins {
-
+    id "org.flywaydb.flyway" version "8.5.11"
 }
 
 flyway {
-    url = 'jdbc:postgresql://localhost:5533/saas_starter'
+    url = 'jdbc:postgresql://localhost:55432/postgres'
     user = 'postgres'
+    password = 'postgres'
 }

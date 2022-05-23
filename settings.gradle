@@ -17,4 +17,4 @@ pluginManagement {
 
 rootProject.name = 'saas_starter'
 
-include 'app', 'integration-tests', 'frontend'
+include 'app', 'integration-tests', 'frontend', 'migrations'
